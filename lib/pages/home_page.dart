@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/models/todo_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,6 +7,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  List<Todo> list = List<Todo>();
+
+  @override
+  void initState() {
+    list.add(Todo(title: "Make Coffee"));
+    list.add(Todo(title: "To do the Homework"));
+    list.add(Todo(title: "Read a book"));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,14 +25,19 @@ class _HomePageState extends State<HomePage> {
         title: Text("Todo App"),
         centerTitle: true,
       ),
-      body: ListView(
-        children: <Widget>[
-          ListTile(
-            onTap: () => {},
-            title: Text("Hello"), 
-            trailing: Icon(Icons.check_box)
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: ListView.separated(
+          itemCount: list.length,
+          separatorBuilder: (context, index) => Divider(),
+          itemBuilder: (context, index) {
+            return ListTile(
+              onTap: () => print(list[index].title),
+              title: Text(list[index].title), 
+              trailing: Icon(Icons.check_box)
+            );
+          }
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {},
