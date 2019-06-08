@@ -8,37 +8,42 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<Todo> list = List<Todo>();
+  List<Todo> _todos = List<Todo>();
 
   @override
   void initState() {
-    list.add(Todo(title: "Make Coffee"));
-    list.add(Todo(title: "To do the Homework"));
-    list.add(Todo(title: "Read a book"));
+    _todos.add(Todo(title: "Make Coffee"));
+    _todos.add(Todo(title: "To do the Homework"));
+    _todos.add(Todo(title: "Read a book"));
     super.initState();
+  }
+
+  void _setCompleteness(Todo item) {
+    item.complete = !item.complete;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
-        title: Text("Todo App"),
+        title: Text("Todo App", style: TextStyle(
+          fontWeight: FontWeight.bold,
+        )),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: ListView.separated(
-          itemCount: list.length,
-          separatorBuilder: (context, index) => Divider(),
-          itemBuilder: (context, index) {
-            return ListTile(
-              onTap: () => print(list[index].title),
-              title: Text(list[index].title), 
-              trailing: Icon(Icons.check_box)
-            );
-          }
-        ),
+
+      body: ListView.builder(
+        itemCount: _todos.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            onTap: () => _setCompleteness(_todos[index]),
+            title: Text(_todos[index].title), 
+            trailing: Icon(Icons.check_box)
+          );
+        }
       ),
+      
       floatingActionButton: FloatingActionButton(
         onPressed: () => {},
         child: Icon(Icons.add),
