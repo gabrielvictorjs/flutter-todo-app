@@ -19,9 +19,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _setCompleteness(Todo item) {
-    item.complete = !item.complete;
+    setState(() {
+      item.complete = !item.complete;
+    });
   }
 
+  void _removeTodo(Todo item) {
+    _todos.remove(item);
+  }
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,18 +41,32 @@ class _HomePageState extends State<HomePage> {
 
       body: ListView.builder(
         itemCount: _todos.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () => _setCompleteness(_todos[index]),
-            title: Text(_todos[index].title), 
-            trailing: Icon(Icons.check_box)
-          );
-        }
+        itemBuilder: (context, index) => buildTodoItem(_todos[index])
       ),
       
       floatingActionButton: FloatingActionButton(
         onPressed: () => {},
         child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget buildTodoItem(Todo item) {
+    return Dismissible(
+      key: Key(item.hashCode.toString()),
+      onDismissed: (direction) => _removeTodo(item),
+      direction: DismissDirection.startToEnd,
+      background: Container(
+        color: Colors.red[600],
+        child: Icon(Icons.delete, color: Colors.white),
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(left: 12),
+      ),
+
+      child: ListTile(
+        onTap: () => _setCompleteness(item),
+        title: Text(item.title), 
+        trailing: Checkbox(value: item.complete, onChanged: null)
       ),
     );
   }
