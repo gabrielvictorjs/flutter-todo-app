@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/models/todo_model.dart';
+import 'package:todoapp/screens/new_todo_screen.dart';
 
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
 
   List<Todo> _todos = List<Todo>();
 
@@ -45,7 +46,11 @@ class _HomePageState extends State<HomePage> {
       ),
       
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => NewTodoScreen()
+          ));
+        },
         child: Icon(Icons.add),
       ),
     );
