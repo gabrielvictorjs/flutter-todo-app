@@ -13,9 +13,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _todos.add(Todo(title: "Make Coffee"));
-    _todos.add(Todo(title: "To do the Homework"));
-    _todos.add(Todo(title: "Read a book"));
     super.initState();
   }
 
@@ -26,7 +23,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _removeTodo(Todo item) {
-    _todos.remove(item);
+    setState(() {
+      _todos.remove(item);
+    });
+  }
+
+  void _addTodo(Todo item) {
+    setState(() {
+      _todos.add(item);
+    });
+  }
+
+  void _goToNewItemView() {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => NewTodoScreen()
+    )).then((title) {
+      if(title != null) _addTodo(Todo(title: title));
+    });
   }
  
   @override
@@ -40,17 +53,20 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
       ),
 
-      body: ListView.builder(
+      body: _todos.isEmpty 
+      
+      ? Center(child: Text(
+          "Todo list is empty!",
+          style: TextStyle(fontSize: 16),       
+        )) 
+      
+      : ListView.builder(
         itemCount: _todos.length,
         itemBuilder: (context, index) => buildTodoItem(_todos[index])
       ),
       
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => NewTodoScreen()
-          ));
-        },
+        onPressed: _goToNewItemView,
         child: Icon(Icons.add),
       ),
     );

@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 
-class NewTodoScreen extends StatelessWidget {
+class NewTodoScreen extends StatefulWidget {
+
+  @override
+  _NewTodoScreenState createState() => _NewTodoScreenState();
+}
+
+class _NewTodoScreenState extends State<NewTodoScreen> {
+  
+  TextEditingController todoInputController = TextEditingController();
+
+  void _saveTodo() {
+    if(todoInputController.text.isNotEmpty)
+      Navigator.of(context).pop(todoInputController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,13 +31,16 @@ class NewTodoScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
 
           children: <Widget>[
-            TextField(),
+            TextField(
+              controller: todoInputController,
+              onEditingComplete: () {}, 
+            ),
             
             SizedBox(height: 20),
             
             RaisedButton(
               color: Colors.yellow,
-              onPressed: () => {},
+              onPressed: _saveTodo,
               child: Text("Save Todo", style: TextStyle(
                 fontSize: 18,
               ))
