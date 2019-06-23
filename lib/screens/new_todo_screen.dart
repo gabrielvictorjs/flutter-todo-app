@@ -35,9 +35,9 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
               controller: todoInputController,
               onEditingComplete: () {}, 
             ),
-            
+
             SizedBox(height: 20),
-            
+
             RaisedButton(
               color: Colors.yellow,
               onPressed: _saveTodo,
@@ -46,7 +46,7 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
               ))
             )
           ],
-          
+
         ),
       )
     );
