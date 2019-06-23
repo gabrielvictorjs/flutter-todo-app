@@ -77,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
       key: Key(item.hashCode.toString()),
       onDismissed: (direction) => _removeTodo(item),
       direction: DismissDirection.startToEnd,
+      
       background: Container(
         color: Colors.red[600],
         child: Icon(Icons.delete, color: Colors.white),
